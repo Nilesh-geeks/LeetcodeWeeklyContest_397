@@ -1,0 +1,57 @@
+Problem::
+3147. Taking Maximum Energy From the Mystic Dungeon
+
+In a mystic dungeon, n magicians are standing in a line. Each magician has an attribute that gives you energy. Some magicians can give you negative energy, which means taking energy from you.
+
+You have been cursed in such a way that after absorbing energy from magician i, you will be instantly transported to magician (i + k). This process will be repeated until you reach the magician where (i + k) does not exist.
+
+In other words, you will choose a starting point and then teleport with k jumps until you reach the end of the magicians' sequence, absorbing all the energy during the journey.
+
+You are given an array energy and an integer k. Return the maximum possible energy you can gain.
+
+Intuition :: 
+As the problem stated we have to find max sum from any point over
+the array by moving k distance from current point.
+so Make dp array for storing the ans
+Iterate over the array and calculate the sum .
+
+Approach ::
+1. Make Dp array of size of energy + 1
+2. Iterate over the energy array and call function which will 
+    max value starting from that i point
+3.  In REcursive fucntion  add the current value and call the 
+    fucntion for i+k point.
+4.  Return the max value stored
+
+Complexity ::
+Time complexity:
+    O(N)
+Space complexity:
+    O(N) // Recursion + Dp
+
+Code ::
+#pragma gcc optimize("03")
+auto init = [](){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
+
+class Solution {
+    int solve(vector<int>&energy , int k , int i , vector<int>&dp){
+        if(i>=energy.size())return 0; // if ith point out of bound then return 0
+         if(dp[i]!=-1)return dp[i];
+        int t  =energy[i] +  solve(energy , k , i+k,dp); // add the current point and calculate the next point i+k
+        return dp[i] = t; // store the ans in dp
+    }
+public:
+    int maximumEnergy(vector<int>& energy, int k) {
+        vector<int>dp(energy.size()+1,-1); // storing the max value
+        int maxi = INT_MIN;
+        for(int i=0 ; i<energy.size() ; i++){
+           maxi = max(maxi, solve(energy , k, i , dp)); // call for ith point
+        }
+         return maxi;
+    }
+};
