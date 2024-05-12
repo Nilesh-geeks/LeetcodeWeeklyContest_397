@@ -1,0 +1,36 @@
+Problem :: 3146. Permutation Difference between Two Strings
+You are given two strings s and t such that every character occurs at most once in s and t is a permutation of s.
+The permutation difference between s and t is defined as the sum of the absolute difference between the index of the occurrence of each character in s and the index of the occurrence of the same character in t.
+Return the permutation difference between s and t.
+
+Complexity ::
+
+Time complexity:
+    O(N)
+Space complexity:
+    O(1)
+
+Code :: 
+#pragma gcc optimize("03")
+auto init = [](){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
+class Solution {
+public:
+    int findPermutationDifference(string s, string t) {
+        vector<int>v(26,-1); // to Store the index of each occuring character
+        for(int i =0; i<s.size() ; i++){
+            v[s[i]-'a'] =i;  // map character to index
+        }
+        int cnt =0;
+        for(int i=0 ; i<t.size() ; i++){
+            if(v[t[i]-'a']!=-1){
+                cnt+=abs(v[t[i]-'a'] - i); //count
+            }
+        }
+        return cnt;
+    }
+};
